@@ -1,16 +1,16 @@
 FROM andrecatarinoguerra/kg:latest
 
 ENV TERRAFORM_VERSION=0.12.1
-ENV TERRAGRUNT_VERSION=v0.18.2
-ENV VAULT_VERSION=0.10.4
-ENV AWS_CLI_VERSION=1.16.128
-ENV AWS_EBCLI_VERSION=3.14.3
+ENV TERRAGRUNT_VERSION=v0.18.7
+ENV VAULT_VERSION=1.1.2
+ENV AWS_CLI_VERSION=1.16.172
+ENV AWS_EBCLI_VERSION=3.15.2
 ENV DOCKER_COMPOSE_VERSION=1.22.0
-ENV ECS_DEPLOY=1.4.3
+ENV ECS_DEPLOY_VERSION=1.7.0
 
 # Setup
 RUN mkdir -p /tmp/build && cd /tmp/build
-RUN apk --no-cache add python3 git jq && \
+RUN apk --no-cache -u add python3 git jq && \
     pip3 install --upgrade pip
 
 #Install TERRAFORM
@@ -44,9 +44,8 @@ RUN pip3 --no-cache-dir install awsebcli==${AWS_EBCLI_VERSION} && \
     eb --version
 
 #Install ECS_DEPLOY
-RUN wget https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy | tee /usr/bin/ecs-deploy && \
-    chmod 755 /usr/bin/ecs-deploy && \
-    ecs-deploy -v
+RUN pip3 --no-cache-dir install ecs-deploy==${ECS_DEPLOY_VERSION} && \
+    ecs --version
 
 #Clean UP
 RUN rm -rf /tmp/build
