@@ -10,7 +10,7 @@ ENV ECS_DEPLOY_VERSION=1.7.0
 
 # Setup
 RUN mkdir -p /tmp/build && cd /tmp/build
-RUN apk --no-cache -u add python3 git jq && \
+RUN apk --no-cache -u add python3 git jq bash && \
     pip3 install --upgrade pip
 
 #Install TERRAFORM
