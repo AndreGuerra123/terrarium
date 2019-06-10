@@ -10,7 +10,7 @@ ENV ECS_DEPLOY_VERSION=1.7.0
 
 # Setup
 RUN mkdir -p /tmp/build && cd /tmp/build
-RUN apk --no-cache -u add python3 git jq bash && \
+RUN apk --no-cache add python3 git jq docker && \
     pip3 install --upgrade pip
 
 #Install TERRAFORM
@@ -31,6 +31,10 @@ RUN wget https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VER
     unzip -d /usr/local/bin vault_${VAULT_VERSION}_linux_amd64.zip && \
     vault --version
 
+#Install ECS_DEPLOY
+RUN pip3 --no-cache-dir install ecs-deploy==${ECS_DEPLOY_VERSION} && \
+    ecs --version
+
 #Install AWS_CLI_VERSION
 RUN pip3 --no-cache-dir install awscli==${AWS_CLI_VERSION} && \
     aws --version
@@ -43,9 +47,6 @@ RUN pip3 --no-cache-dir install docker-compose==${DOCKER_COMPOSE_VERSION} && \
 RUN pip3 --no-cache-dir install awsebcli==${AWS_EBCLI_VERSION} && \
     eb --version
 
-#Install ECS_DEPLOY
-RUN pip3 --no-cache-dir install ecs-deploy==${ECS_DEPLOY_VERSION} && \
-    ecs --version
 
 #Clean UP
 RUN rm -rf /tmp/build
