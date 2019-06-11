@@ -10,8 +10,8 @@ ENV ECS_DEPLOY_VERSION=1.7.0
 
 # Setup
 RUN mkdir -p /tmp/build && cd /tmp/build
-RUN apk --no-cache add python3 git jq docker && \ 
-    python --version && \
+RUN apk --no-cache --upgrade add python3 git jq docker && \
+    python3 --version && \
     git --version && \
     jq --version && \
     docker --version
