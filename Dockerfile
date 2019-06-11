@@ -10,8 +10,13 @@ ENV ECS_DEPLOY_VERSION=1.7.0
 
 # Setup
 RUN mkdir -p /tmp/build && cd /tmp/build
-RUN apk --no-cache add python3 git jq docker && \
-    pip3 install --upgrade pip
+RUN apk --no-cache add python3 git jq docker && \ 
+    python --version && \
+    git --version && \
+    jq --version && \
+    docker --version
+
+RUN pip3 install --upgrade pip
 
 #Install TERRAFORM
 RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
